@@ -1,29 +1,33 @@
 import 'dart:convert';
 
+import 'package:bloc_to_do/data/source/data_source.dart';
 import 'package:bloc_to_do/domain/entity/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LocalStorage {
+class LocalStorage extends DataSource {
   final SharedPreferences sharedPref;
   final int pageSize;
 
-  LocalStorage({
+  const LocalStorage({
     required this.sharedPref,
     this.pageSize = 10,
   });
 
-  List<Task> loadTasksPage(int page) {
+  @override
+  Future<List<Task>> loadTasksPage({required int page}) async {
     final List<Task> allTasks = _loadAllTasks();
 
     return allTasks.sublist(page * pageSize, (page + 1) * pageSize);
   }
 
-  void updateTask(Task task) {
-    removeTask(task.id);
-    saveTask(task);
+  @override
+  Future<void> updateTask(Task task) async {
+    await removeTask(task.id);
+    await saveTask(task);
   }
 
-  void saveTask(Task task) {
+  @override
+  Future<void> saveTask(Task task) async {
     final String jsonString = json.encode(task.toMap());
 
     // Получаем текущий список задач из хранилища
@@ -33,17 +37,18 @@ class LocalStorage {
     jsonList.add(jsonString);
 
     // Сохраняем обновленный список задач в хранилище
-    sharedPref.setStringList('tasks', jsonList);
+    await sharedPref.setStringList('tasks', jsonList);
   }
 
-  void removeTask(int id) {
+  @override
+  Future<void> removeTask(int id) async {
     final List<Task> allTasks = _loadAllTasks();
 
     allTasks.removeWhere((Task task) => task.id == id);
 
     final List<String> jsonList = allTasks.map((Task task) => json.encode(task.toMap())).toList();
     // Сохраняем обновленный список задач в хранилище
-    sharedPref.setStringList('tasks', jsonList);
+    await sharedPref.setStringList('tasks', jsonList);
   }
 
   List<Task> _loadAllTasks() {
