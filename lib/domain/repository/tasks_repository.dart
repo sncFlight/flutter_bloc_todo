@@ -1,8 +1,8 @@
 import 'package:bloc_to_do/domain/entity/task.dart';
 
-abstract class TaskRepository {
+abstract class TasksRepository {
   Future<List<Task>> getAllTasks({required int page});
-  Future<void> addTask(Task task);
-  Future<void> updateTask(Task task);
-  Future<void> deleteTask(int id);
+  Future<void> addTask({required Task task});
+  Future<void> updateTask({required Task task});
+  Future<void> removeTask({required int id});
 }
