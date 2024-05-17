@@ -1,16 +1,29 @@
-# bloc_to_do
+## Flutter Bloc ToDo Application
 
-A new Flutter project.
+This Flutter ToDo application is designed to help users manage their tasks efficiently. Built using the Bloc architecture and Clean Architecture principles, it provides a structured and scalable codebase for easy maintenance and extensibility.
 
-## Getting Started
+### Features:
 
-This project is a starting point for a Flutter application.
+- **Task Management:** Add, view, and delete tasks effortlessly.
+- **Task Status Tracking:** Keep track of task completion status.
+- **Intuitive Interface:** Simple and intuitive user interface for seamless task organization.
+- **Scalable Architecture:** Utilizes Bloc architecture and Clean Architecture principles for a structured and maintainable codebase.
 
-A few resources to get you started if this is your first Flutter project:
+### Technologies Used:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter:** Google's UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+- **Bloc:** State management library for Flutter, providing a clear separation between business logic and UI components.
+- **Clean Architecture:** Architectural pattern that promotes maintainability, scalability, and testability by enforcing separation of concerns.
+- **Google Fonts:** Collection of fonts provided by Google, used to enhance the visual appeal of the application.
+- **SharedPreferences:** Lightweight and persistent storage solution for storing key-value pairs on the device.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Getting Started:
+
+1. Clone the repository: `git clone https://github.com/sncFlight/flutter_bloc_todo.git`
+2. Navigate to the project directory: `cd flutter_bloc_todo`
+3. Install dependencies: `flutter pub get`
+4. Run the application: `flutter run`
+
+### License:
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
