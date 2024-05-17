@@ -1,5 +1,10 @@
 name: bloc_to_do
-description: "A new Flutter project."
+description: '''
+  ToDoList is a convenient task management tool developed using Flutter. 
+  With ToDoList, you can easily add, view, and delete tasks, as well as track their completion status. 
+  Its simple and intuitive interface helps you organize your workflow effectively and increase productivity. 
+  Start using ToDoList now and streamline your life effortlessly!
+'''
 publish_to: 'none'
 
 version: 1.0.0+1
