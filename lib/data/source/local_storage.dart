@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:bloc_to_do/data/source/data_source.dart';
 import 'package:bloc_to_do/domain/entity/task.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage extends DataSource {
   final SharedPreferences sharedPref;
@@ -15,42 +16,52 @@ class LocalStorage extends DataSource {
 
   @override
   Future<List<Task>> loadTasksPage({required int page}) async {
+    // Load all tasks from storage
     final List<Task> allTasks = _loadAllTasks();
 
-    return allTasks.sublist(page * pageSize, (page + 1) * pageSize);
+    // Calculate the starting index of tasks for the requested page
+    final int tasksCount;
+    final int lengthOfLoadedTasks = page * pageSize;
+
+    // Determine the number of tasks to load for the requested page
+    if ((page + 1) * pageSize > allTasks.length) {
+      tasksCount = allTasks.length - lengthOfLoadedTasks;
+    } else {
+      tasksCount = pageSize;
+    }
+
+    // Return the sublist of tasks for the requested page
+    return allTasks.sublist(lengthOfLoadedTasks, lengthOfLoadedTasks + tasksCount);
   }
 
   @override
-  Future<void> updateTask(Task task) async {
-    await removeTask(task.id);
-    await saveTask(task);
-  }
-
-  @override
-  Future<void> saveTask(Task task) async {
+  Future<void> saveTask({required Task task}) async {
+    // Encode the task to JSON
     final String jsonString = json.encode(task.toMap());
 
-    // Получаем текущий список задач из хранилища
+    // Get the current list of tasks from storage
     final List<String> jsonList = sharedPref.getStringList('tasks') ?? [];
 
-    // Добавляем новую задачу в конец списка
+    // Add the new task to the end of the list
     jsonList.add(jsonString);
 
-    // Сохраняем обновленный список задач в хранилище
+    // Save the updated list of tasks to storage
     await sharedPref.setStringList('tasks', jsonList);
   }
 
   @override
-  Future<void> removeTask(int id) async {
-    final List<Task> allTasks = _loadAllTasks();
+  Future<void> removeTask({required String id}) async {
+    // Get the current list of tasks from storage
+    final List<String> jsonList = sharedPref.getStringList('tasks') ?? [];
 
-    allTasks.removeWhere((Task task) => task.id == id);
+    // Remove the task with the specified ID from the list
+    jsonList.removeWhere((String str) => json.decode(str)['id'] == id);
 
-    final List<String> jsonList = allTasks.map((Task task) => json.encode(task.toMap())).toList();
-    // Сохраняем обновленный список задач в хранилище
+    // Save the updated list of tasks to storage
     await sharedPref.setStringList('tasks', jsonList);
   }
 
+  // Load all tasks from storage and convert them to Task objects
   List<Task> _loadAllTasks() {
     final List<String> jsonList = sharedPref.getStringList('tasks') ?? [];
 

@@ -2,19 +2,14 @@ import 'package:bloc_to_do/data/source/data_source.dart';
 import 'package:bloc_to_do/domain/entity/task.dart';
 import 'package:bloc_to_do/domain/repository/tasks_repository.dart';
 
-class TaskRepositoryImpl extends TasksRepository {
+class TasksRepositoryImpl extends TasksRepository {
   final DataSource dataSource;
 
-  TaskRepositoryImpl({required this.dataSource});
+  TasksRepositoryImpl({required this.dataSource});
   
   @override
   Future<void> addTask({required Task task}) async {
-    await dataSource.saveTask(task);
-  }
-
-  @override
-  Future<void> removeTask({required int id}) async {
-    await dataSource.removeTask(id);
+    await dataSource.saveTask(task: task);
   }
 
   @override
@@ -23,8 +18,7 @@ class TaskRepositoryImpl extends TasksRepository {
   }
 
   @override
-  Future<void> updateTask({required Task task}) async {
-    throw UnimplementedError();
+  Future<void> removeTask({required String id}) async {
+    return dataSource.removeTask(id: id);
   }
-
 }

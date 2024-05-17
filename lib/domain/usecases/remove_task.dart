@@ -1,3 +1,4 @@
+import 'package:bloc_to_do/domain/entity/task.dart';
 import 'package:bloc_to_do/domain/repository/tasks_repository.dart';
 
 class RemoveTask {
@@ -7,7 +8,7 @@ class RemoveTask {
     required this.repository,
   });
 
-  Future<void> call({required int id}) async {
-    await repository.removeTask(id: id);
+  Future<void> call({required Task task}) async {
+    await repository.removeTask(id: task.id);
   }
 }
