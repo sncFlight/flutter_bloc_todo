@@ -1,10 +1,10 @@
 import 'package:bloc_to_do/domain/entity/task.dart';
 import 'package:bloc_to_do/domain/repository/tasks_repository.dart';
 
-class GetAllTasks {
+class GetTasks {
   final TasksRepository repository;
 
-  const GetAllTasks({
+  const GetTasks({
     required this.repository,
   });
 
