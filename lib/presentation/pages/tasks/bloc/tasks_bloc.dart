@@ -43,7 +43,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       state.copyWith(
         status: TasksStatus.success,
         tasks: List.of(state.tasks)..addAll([task]),
-        snackBarMessage: 'New task added',
+        snackBarMessage: 'Добавлена новая задача',
       ),
     );
   }
@@ -79,7 +79,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           emit(state.copyWith(
             status: TasksStatus.success,
             tasks: tasksAfterRemoval,
-            snackBarMessage: 'Congratulations! You completed the task',
+            snackBarMessage: 'Отлично! Вы завершили задачу',
           ));
         }
 
